@@ -1,0 +1,113 @@
+application {
+  config {
+    baseName hotelMangement
+    applicationType monolith
+    prodDatabaseType postgresql
+    skipClient true
+  }
+  entities *
+}
+
+entity Users{
+	email String
+    password String
+	address String
+    birthDate LocalDate
+    city String
+    firstName String
+    lastName String
+    phoneNumber String
+    isActive Boolean
+}
+
+entity Role{
+	name String
+}
+
+entity Room{
+	title String
+    roomNumber String
+    floot String
+    pricePerNight Double
+    maxGuests Integer
+    description TextBlob
+    image ImageBlop
+}
+
+entity SpecialOffer{
+	offerName String
+    offerCode String
+    discountPercent Double
+    startDate LocalDate
+    endDate LocalDate
+}
+
+entity Reservation{
+	startDate LocalDate
+    endDate LocalDate
+    numberOfGuests Integer
+}
+
+entity CheckInOut{
+	startDateTime ZonedDateTime
+    endDateTime ZonedDateTime
+}
+
+entity Payment{
+	amount Double
+    paymentDateTime ZonedDateTime
+}
+
+entity CreditCard{
+	cardNumber String
+    cardHolderName String
+    expirationDate LocalDate
+    cvv String
+    customerId Long
+}
+
+entity PaymentStatus{
+	name String
+    isActive Boolean
+}
+
+entity RoomType{
+	name String
+    isActive Boolean
+}
+
+entity RoomStatus{
+	name String
+    isActive Boolean
+}
+
+entity RoomAvailabilityStatus{
+	name String
+    isActive Boolean
+}
+
+relationship ManyToMany {
+	Users to Role
+}
+
+relationship ManyToOne {
+	Room to RoomType
+    Room to RoomStatus
+    Room to RoomAvailabilityStatus
+    
+    SpecialOffer to RoomType
+    
+    Reservation to Room
+    Reservation to Users
+    
+    CheckInOut to Reservation
+    
+    Payment to Users
+    Payment to Reservation
+    Payment to PaymentStatus
+    Payment to CreditCard
+    
+    CreditCard to Users
+}
+
+service all with serviceImpl

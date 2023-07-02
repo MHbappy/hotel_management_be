@@ -1,0 +1,52 @@
+Description:
+
+I am looking for an experienced and creative developer to create a hotel management web application for my school project. The application should primarily handle reservations and offer a user-friendly interface. The backend should be built using Spring Boot, and the frontend should be developed using React JS.
+
+Key Features:
+
+User Authentication: The application should provide secure user authentication for different roles, such as guests, hotel staff, and administrators, using JWT tokens.
+
+Hotel Room Management: The application should allow administrators to add, edit, and delete hotel rooms, as well as set room availability and pricing.
+
+Booking Calendar: The application should display a calendar view showing room availability and reservations, allowing hotel staff to manage bookings efficiently.
+
+Guest and Staff Management: The application should enable administrators to manage guest profiles and staff accounts, including assigning roles and permissions.
+
+Reservation System:Receptionist should be able to search for available rooms, filter by preferences (e.g., room type, price range, and dates), and make reservations online. The system should also be able to handle cancellations and modifications.
+
+
+
+Application have this many pages
+-------------------------------
+
+Dashboard
+-Overview of some statistics
+
+Room management
+-Table List with all avaiable rooms - in table there will be buttons to edit or delete rooms - if Edit then new popup window will appear
+-option to add new room - popup window will apear
+
+Reservations management
+-there will be Table List and Timetable with all reservations,, if list all reservations if timetable only today reservations, you can switch between them with button
+-In list there will be again button to edit reservation in new popup window and delete reservation also popup window with yes/no clarification
+
+Guests management
+-Guest management will have 3 pages that you can swtich between, it will be
+Dashboard with table list with all reservation with client, on top of the page there will be search button that you can use to find client
+Profile page where all information about customer will be shown and where you can edit if you want
+Payment page where you will see all payments made by customer and his credit cards
+
+Create new reservation
+-it is already described in text use case create reservation
+
+Reporting
+-I will give you more information about this later i still dont know what to add here
+
+--------------------------------------------------------------
+create new reservation use case
+
+1- page :select date
+2-page : select customer, if he doesnt exist option for adding new one and select from avaiable rooms,, rooms will have picture with them too
+3page: reservation recap, confirm reservation and add card as payment method, payment doesnt have to be real just make sure that numbers of card have correct format and info and have checkbox that you can link this credit card to customer,, after clicking finalize the payment will be captured in new row in database and linked to customer, and if checkbox is clicked credit card will be saved in database with customer profile too also option to add some discounts
+
+After finalizing reservations room avaiability will change to occupied.
