@@ -101,7 +101,7 @@ relationship ManyToOne {
     Reservation to Users
     
     CheckInOut to Reservation
-    
+
     Payment to Users
     Payment to Reservation
     Payment to PaymentStatus
