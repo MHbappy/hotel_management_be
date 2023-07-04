@@ -33,26 +33,6 @@ public class RoomAvailabilityStatusService {
         log.debug("Request to update RoomAvailabilityStatus : {}", roomAvailabilityStatus);
         return roomAvailabilityStatusRepository.save(roomAvailabilityStatus);
     }
-
-    
-    public Optional<RoomAvailabilityStatus> partialUpdate(RoomAvailabilityStatus roomAvailabilityStatus) {
-        log.debug("Request to partially update RoomAvailabilityStatus : {}", roomAvailabilityStatus);
-
-        return roomAvailabilityStatusRepository
-            .findById(roomAvailabilityStatus.getId())
-            .map(existingRoomAvailabilityStatus -> {
-                if (roomAvailabilityStatus.getName() != null) {
-                    existingRoomAvailabilityStatus.setName(roomAvailabilityStatus.getName());
-                }
-                if (roomAvailabilityStatus.getIsActive() != null) {
-                    existingRoomAvailabilityStatus.setIsActive(roomAvailabilityStatus.getIsActive());
-                }
-
-                return existingRoomAvailabilityStatus;
-            })
-            .map(roomAvailabilityStatusRepository::save);
-    }
-
     
     @Transactional(readOnly = true)
     public List<RoomAvailabilityStatus> findAll() {

@@ -1,5 +1,6 @@
 package com.hotel.hotel_management.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.hotel.hotel_management.model.Roles;
@@ -9,10 +10,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserDataDTO {
-  
-  private String username;
   private String email;
   private String password;
-  List<Roles> appUserRoles;
-
+  private String firstName;
+  private String lastName;
+  private String phoneNumber;
+  private LocalDate birthOfDate;
+  private String address;
+  private String country;
+  private String city;
+  private String zipCode;
+  List<Roles> roles;
 }

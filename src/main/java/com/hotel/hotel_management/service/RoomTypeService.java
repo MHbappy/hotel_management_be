@@ -28,31 +28,10 @@ public class RoomTypeService {
         return roomTypeRepository.save(roomType);
     }
 
-    
     public RoomType update(RoomType roomType) {
         log.debug("Request to update RoomType : {}", roomType);
         return roomTypeRepository.save(roomType);
     }
-
-    
-    public Optional<RoomType> partialUpdate(RoomType roomType) {
-        log.debug("Request to partially update RoomType : {}", roomType);
-
-        return roomTypeRepository
-            .findById(roomType.getId())
-            .map(existingRoomType -> {
-                if (roomType.getName() != null) {
-                    existingRoomType.setName(roomType.getName());
-                }
-                if (roomType.getIsActive() != null) {
-                    existingRoomType.setIsActive(roomType.getIsActive());
-                }
-
-                return existingRoomType;
-            })
-            .map(roomTypeRepository::save);
-    }
-
     
     @Transactional(readOnly = true)
     public List<RoomType> findAll() {

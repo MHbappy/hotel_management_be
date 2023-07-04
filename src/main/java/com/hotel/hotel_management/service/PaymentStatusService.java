@@ -33,26 +33,6 @@ public class PaymentStatusService {
         log.debug("Request to update PaymentStatus : {}", paymentStatus);
         return paymentStatusRepository.save(paymentStatus);
     }
-
-    
-    public Optional<PaymentStatus> partialUpdate(PaymentStatus paymentStatus) {
-        log.debug("Request to partially update PaymentStatus : {}", paymentStatus);
-
-        return paymentStatusRepository
-            .findById(paymentStatus.getId())
-            .map(existingPaymentStatus -> {
-                if (paymentStatus.getName() != null) {
-                    existingPaymentStatus.setName(paymentStatus.getName());
-                }
-                if (paymentStatus.getIsActive() != null) {
-                    existingPaymentStatus.setIsActive(paymentStatus.getIsActive());
-                }
-
-                return existingPaymentStatus;
-            })
-            .map(paymentStatusRepository::save);
-    }
-
     
     @Transactional(readOnly = true)
     public List<PaymentStatus> findAll() {

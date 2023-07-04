@@ -3,15 +3,23 @@ package com.hotel.hotel_management.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.hotel.hotel_management.dto.PasswordChangeDTO;
+import com.hotel.hotel_management.dto.UserUpdateDataDTO;
 import com.hotel.hotel_management.model.Users;
 import com.hotel.hotel_management.exception.CustomException;
 import com.hotel.hotel_management.repository.UserRepository;
 import com.hotel.hotel_management.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +32,7 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   private final JwtTokenProvider jwtTokenProvider;
   private final AuthenticationManager authenticationManager;
+  private final ModelMapper modelMapper;
 
   public String signin(String email, String password) {
     try {
@@ -56,6 +65,39 @@ public class UserService {
     if (appUser == null) {
       throw new CustomException("The user doesn't exist", HttpStatus.NOT_FOUND);
     }
+    return appUser;
+  }
+
+  public Users searchWithoutException(String email) {
+    Users appUser = userRepository.findByEmail(email);
+    return appUser;
+  }
+
+  public Boolean passwordChange(PasswordChangeDTO appUser) {
+    Users users = userRepository.findById(appUser.getUserId()).get();
+    users.setPassword(passwordEncoder.encode(appUser.getPassword()));
+    userRepository.save(users);
+    return true;
+  }
+
+  public Boolean updateUser(UserUpdateDataDTO userUpdateDataDTO) {
+    Users users = userRepository.findById(userUpdateDataDTO.getId()).get();
+    modelMapper.map(userUpdateDataDTO, users);
+    userRepository.save(users);
+    return true;
+  }
+
+  public Users getCurrentUser() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (!(authentication instanceof AnonymousAuthenticationToken)) {
+      String currentUserName = authentication.getName();
+      return userRepository.findByEmail(currentUserName);
+    }
+    return null;
+  }
+
+  public Page<Users> allUserByEmail(String email, Pageable pageable) {
+    Page<Users> appUser = userRepository.findAllByIsActiveAndEmailContainingIgnoreCase(true, email, pageable);
     return appUser;
   }
 

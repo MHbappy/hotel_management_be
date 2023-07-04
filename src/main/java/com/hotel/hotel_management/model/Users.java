@@ -39,7 +39,7 @@ public class Users {
 
   private String zipCode;
 
-  private Boolean isActive;
+  private Boolean isActive = true;
 
   @Size(min = 8, message = "Minimum password length: 8 characters")
   private String password;

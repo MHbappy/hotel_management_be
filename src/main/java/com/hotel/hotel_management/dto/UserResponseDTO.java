@@ -1,13 +1,20 @@
 package com.hotel.hotel_management.dto;
+import java.time.LocalDate;
 import java.util.List;
-
-import com.hotel.hotel_management.model.Users;
+import com.hotel.hotel_management.model.Roles;
 import lombok.Data;
 
 @Data
 public class UserResponseDTO {
   private Integer id;
-  private String username;
   private String email;
-  List<Users> appUserRoles;
+  private String firstName;
+  private String lastName;
+  private String phoneNumber;
+  private LocalDate birthOfDate;
+  private String address;
+  private String country;
+  private String city;
+  private String zipCode;
+  List<Roles> roles;
 }

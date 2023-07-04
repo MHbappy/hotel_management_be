@@ -5,7 +5,6 @@ import com.hotel.hotel_management.repository.RoomRepository;
 import com.hotel.hotel_management.service.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +20,7 @@ import java.util.Optional;
 public class RoomResource {
 
     private final Logger log = LoggerFactory.getLogger(RoomResource.class);
-
     private final RoomService roomService;
-
     private final RoomRepository roomRepository;
 
     public RoomResource(RoomService roomService, RoomRepository roomRepository) {
