@@ -44,7 +44,7 @@ public class UserController {
   }
 
   @PostMapping("/signup")
-  public String signupGuest(@RequestBody GuestUserDataDTO user) {
+  public String signupGuest(@RequestBody @Valid GuestUserDataDTO user) {
     Set<Roles> rolesSet = new HashSet<>();
     rolesSet.add(new Roles(Constrains.guest));
     Users users = modelMapper.map(user, Users.class);
@@ -82,7 +82,6 @@ public class UserController {
     if (!Objects.equals(userId, user.getId())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id");
     }
-
     if (!userRepository.existsById(userId)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entity not found");
     }
@@ -97,19 +96,18 @@ public class UserController {
     if (!users.getId().equals(user.getId())){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not current user or not admin user.");
     }
-
     return userService.updateUser(user);
   }
 
-  @DeleteMapping(value = "/{username}")
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
-  public String delete(@PathVariable String username) {
-    userService.delete(username);
-    return username;
-  }
+//  @DeleteMapping(value = "/{username}")
+//  @PreAuthorize("hasRole('ROLE_ADMIN')")
+//  public String delete(@PathVariable String username) {
+//    userService.delete(username);
+//    return username;
+//  }
 
   @GetMapping(value = "/{username}")
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+//  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public UserResponseDTO search(@PathVariable String username) {
     return modelMapper.map(userService.search(username), UserResponseDTO.class);
   }

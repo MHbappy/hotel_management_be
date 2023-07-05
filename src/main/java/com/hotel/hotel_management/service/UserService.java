@@ -3,12 +3,14 @@ package com.hotel.hotel_management.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.hotel.hotel_management.configuration.Constrains;
 import com.hotel.hotel_management.dto.PasswordChangeDTO;
 import com.hotel.hotel_management.dto.UserUpdateDataDTO;
 import com.hotel.hotel_management.model.Users;
 import com.hotel.hotel_management.exception.CustomException;
 import com.hotel.hotel_management.repository.UserRepository;
 import com.hotel.hotel_management.security.JwtTokenProvider;
+import com.hotel.hotel_management.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -81,8 +83,12 @@ public class UserService {
   }
 
   public Boolean updateUser(UserUpdateDataDTO userUpdateDataDTO) {
+    Boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority(Constrains.admin);
     Users users = userRepository.findById(userUpdateDataDTO.getId()).get();
     modelMapper.map(userUpdateDataDTO, users);
+    if (isAdmin){
+      users.setRoles(userUpdateDataDTO.getAppRoles());
+    }
     userRepository.save(users);
     return true;
   }

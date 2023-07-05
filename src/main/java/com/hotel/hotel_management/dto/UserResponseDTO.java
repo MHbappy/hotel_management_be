@@ -5,16 +5,7 @@ import com.hotel.hotel_management.model.Roles;
 import lombok.Data;
 
 @Data
-public class UserResponseDTO {
+public class UserResponseDTO extends GuestUserDataDTO{
   private Integer id;
-  private String email;
-  private String firstName;
-  private String lastName;
-  private String phoneNumber;
-  private LocalDate birthOfDate;
-  private String address;
-  private String country;
-  private String city;
-  private String zipCode;
   List<Roles> roles;
 }

@@ -1,5 +1,6 @@
 package com.hotel.hotel_management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -41,10 +42,11 @@ public class Users {
 
   private Boolean isActive = true;
 
-  @Size(min = 8, message = "Minimum password length: 8 characters")
+  @Size(min = 6, message = "Minimum password length: 6 characters")
+  @JsonIgnore
   private String password;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
           name = "user_role",
           joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
