@@ -15,61 +15,21 @@ import java.util.Optional;
 @Service
 @Transactional
 public class RoomService {
-
     private final Logger log = LoggerFactory.getLogger(RoomService.class);
-
     private final RoomRepository roomRepository;
-
     public RoomService(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
     }
 
-    
     public Room save(Room room) {
         log.debug("Request to save Room : {}", room);
         return roomRepository.save(room);
     }
 
-    
     public Room update(Room room) {
         log.debug("Request to update Room : {}", room);
         return roomRepository.save(room);
     }
-
-    
-    public Optional<Room> partialUpdate(Room room) {
-        log.debug("Request to partially update Room : {}", room);
-
-        return roomRepository
-            .findById(room.getId())
-            .map(existingRoom -> {
-                if (room.getTitle() != null) {
-                    existingRoom.setTitle(room.getTitle());
-                }
-                if (room.getRoomNumber() != null) {
-                    existingRoom.setRoomNumber(room.getRoomNumber());
-                }
-                if (room.getFloot() != null) {
-                    existingRoom.setFloot(room.getFloot());
-                }
-                if (room.getPricePerNight() != null) {
-                    existingRoom.setPricePerNight(room.getPricePerNight());
-                }
-                if (room.getMaxGuests() != null) {
-                    existingRoom.setMaxGuests(room.getMaxGuests());
-                }
-                if (room.getDescription() != null) {
-                    existingRoom.setDescription(room.getDescription());
-                }
-                if (room.getImage() != null) {
-                    existingRoom.setImage(room.getImage());
-                }
-
-                return existingRoom;
-            })
-            .map(roomRepository::save);
-    }
-
     
     @Transactional(readOnly = true)
     public List<Room> findAll() {

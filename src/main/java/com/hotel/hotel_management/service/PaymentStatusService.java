@@ -2,6 +2,7 @@ package com.hotel.hotel_management.service;
 
 import com.hotel.hotel_management.model.PaymentStatus;
 import com.hotel.hotel_management.repository.PaymentStatusRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,44 +13,16 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class PaymentStatusService {
 
     private final Logger log = LoggerFactory.getLogger(PaymentStatusService.class);
-
     private final PaymentStatusRepository paymentStatusRepository;
-
-    public PaymentStatusService(PaymentStatusRepository paymentStatusRepository) {
-        this.paymentStatusRepository = paymentStatusRepository;
-    }
-
-    
-    public PaymentStatus save(PaymentStatus paymentStatus) {
-        log.debug("Request to save PaymentStatus : {}", paymentStatus);
-        return paymentStatusRepository.save(paymentStatus);
-    }
-
-    
-    public PaymentStatus update(PaymentStatus paymentStatus) {
-        log.debug("Request to update PaymentStatus : {}", paymentStatus);
-        return paymentStatusRepository.save(paymentStatus);
-    }
     
     @Transactional(readOnly = true)
     public List<PaymentStatus> findAll() {
         log.debug("Request to get all PaymentStatuses");
-        return paymentStatusRepository.findAll();
+        return paymentStatusRepository.findAllByIsActiveTrue();
     }
 
-    
-    @Transactional(readOnly = true)
-    public Optional<PaymentStatus> findOne(Long id) {
-        log.debug("Request to get PaymentStatus : {}", id);
-        return paymentStatusRepository.findById(id);
-    }
-
-    
-    public void delete(Long id) {
-        log.debug("Request to delete PaymentStatus : {}", id);
-        paymentStatusRepository.deleteById(id);
-    }
 }

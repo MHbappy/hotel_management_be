@@ -3,6 +3,8 @@ package com.hotel.hotel_management.controller;
 import com.hotel.hotel_management.model.SpecialOffer;
 import com.hotel.hotel_management.repository.SpecialOfferRepository;
 import com.hotel.hotel_management.service.SpecialOfferService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,24 +21,21 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class SpecialOfferResource {
-
     private final Logger log = LoggerFactory.getLogger(SpecialOfferResource.class);
-
     private final SpecialOfferService specialOfferService;
-
     private final SpecialOfferRepository specialOfferRepository;
-
-    public SpecialOfferResource(SpecialOfferService specialOfferService, SpecialOfferRepository specialOfferRepository) {
-        this.specialOfferService = specialOfferService;
-        this.specialOfferRepository = specialOfferRepository;
-    }
 
     @PostMapping("/special-offers")
     public ResponseEntity<SpecialOffer> createSpecialOffer(@RequestBody SpecialOffer specialOffer) throws URISyntaxException {
         log.debug("REST request to save SpecialOffer : {}", specialOffer);
         if (specialOffer.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A new specialOffer cannot already have an ID");
+        }
+        Boolean isExistWithSameCode = specialOfferRepository.existsByOfferCodeAndIsActiveTrue(specialOffer.getOfferCode());
+        if (isExistWithSameCode){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Offer code already exist!");
         }
         SpecialOffer result = specialOfferService.save(specialOffer);
         return ResponseEntity
@@ -82,7 +81,6 @@ public class SpecialOfferResource {
 
     /**
      * {@code DELETE  /special-offers/:id} : delete the "id" specialOffer.
-     *
      * @param id the id of the specialOffer to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
