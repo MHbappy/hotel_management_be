@@ -12,8 +12,7 @@ Booking Calendar: The application should display a calendar view showing room av
 
 Guest and Staff Management: The application should enable administrators to manage guest profiles and staff accounts, including assigning roles and permissions.
 
-Reservation System:Receptionist should be able to search for available rooms, filter by preferences (e.g., room type, price range, and dates), and make reservations online. The system should also be able to handle cancellations and modifications.
-
+Reservation System: Receptionist should be able to search for available rooms, filter by preferences (e.g., room type, price range, and dates), and make reservations online. The system should also be able to handle cancellations and modifications.
 
 
 Application have this many pages
@@ -50,3 +49,27 @@ create new reservation use case
 3page: reservation recap, confirm reservation and add card as payment method, payment doesnt have to be real just make sure that numbers of card have correct format and info and have checkbox that you can link this credit card to customer,, after clicking finalize the payment will be captured in new row in database and linked to customer, and if checkbox is clicked credit card will be saved in database with customer profile too also option to add some discounts
 
 After finalizing reservations room avaiability will change to occupied.
+
+
+
+
+*****
+
+Dashboard, how many types of and status of rooms here..
+
+Reservation list by user(API)
+User Search with dropdown -> show user Information (So I need the search api with drop down)
+Room Search With room type, price range, and dates, (So I need here a api with roomType, range and dates)
+Now Need Payment - Pop up for adding card.(add card with user api, check cupons, get card information for existing card for this user then okay) and Proceed.
+Reservation can canceled, when reservation cancelled then room will be available.
+
+Own profile can be modified with guest and other user can do it every thing.
+Credit card list show with guest and another users.
+Show payment information by user.
+
+Guest can do this without selecting users.
+
+
+
+
+
