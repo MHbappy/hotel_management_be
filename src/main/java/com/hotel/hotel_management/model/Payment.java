@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 /**
@@ -26,7 +27,7 @@ public class Payment implements Serializable {
     private Double amount;
 
     @Column(name = "payment_date_time")
-    private ZonedDateTime paymentDateTime;
+    private LocalDateTime paymentDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "roles", "reservations", "payments", "creditCards" }, allowSetters = true)

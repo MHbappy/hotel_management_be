@@ -33,29 +33,6 @@ public class ReservationService {
         log.debug("Request to update Reservation : {}", reservation);
         return reservationRepository.save(reservation);
     }
-
-    
-    public Optional<Reservation> partialUpdate(Reservation reservation) {
-        log.debug("Request to partially update Reservation : {}", reservation);
-
-        return reservationRepository
-            .findById(reservation.getId())
-            .map(existingReservation -> {
-                if (reservation.getStartDate() != null) {
-                    existingReservation.setStartDate(reservation.getStartDate());
-                }
-                if (reservation.getEndDate() != null) {
-                    existingReservation.setEndDate(reservation.getEndDate());
-                }
-                if (reservation.getNumberOfGuests() != null) {
-                    existingReservation.setNumberOfGuests(reservation.getNumberOfGuests());
-                }
-
-                return existingReservation;
-            })
-            .map(reservationRepository::save);
-    }
-
     
     @Transactional(readOnly = true)
     public List<Reservation> findAll() {

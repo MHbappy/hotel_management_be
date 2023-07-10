@@ -66,8 +66,10 @@ Reservation can canceled, when reservation cancelled then room will be available
 Own profile can be modified with guest and other user can do it every thing.
 Credit card list show with guest and another users.
 Show payment information by user.
+Checkout/Checkin information by user, checkin or chekout only possible if only reserved, so, we can do this with reservation list.
 
 Guest can do this without selecting users.
+getUserById by shr
 
 
 

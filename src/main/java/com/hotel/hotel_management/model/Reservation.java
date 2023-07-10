@@ -1,9 +1,11 @@
 package com.hotel.hotel_management.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hotel.hotel_management.enumuration.ReservationStatus;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -32,11 +34,15 @@ public class Reservation implements Serializable {
     @Column(name = "number_of_guests")
     private Integer numberOfGuests;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "roomType", "roomStatus", "roomAvailabilityStatus", "reservations" }, allowSetters = true)
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservationStatus;
+
+    @ManyToOne
+//    @JsonIgnoreProperties(value = { "roomType", "roomStatus", "roomAvailabilityStatus", "reservations" }, allowSetters = true)
+    @NotNull
     private Room room;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JsonIgnoreProperties(value = { "roles", "reservations", "payments", "creditCards" }, allowSetters = true)
     private Users users;
 }

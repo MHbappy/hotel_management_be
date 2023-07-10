@@ -13,4 +13,5 @@ import java.util.List;
 @Repository
 public interface RoomAvailabilityStatusRepository extends JpaRepository<RoomAvailabilityStatus, Long> {
     List<RoomAvailabilityStatus> findAllByIsActiveTrue();
+    RoomAvailabilityStatus findByName(String name);
 }
