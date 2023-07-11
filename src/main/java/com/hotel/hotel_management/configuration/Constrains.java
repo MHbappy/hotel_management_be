@@ -7,4 +7,7 @@ public class Constrains {
 
     public static final String roomAvailabilityStatusReserved = "RESERVED";
     public static final String roomAvailabilityStatusOpen = "OPEN";
+
+    public static final String paymentStatusPaid = "PAID";
+    public static final String paymentStatusCancelled = "CANCELLED";
 }

@@ -2,7 +2,6 @@ package com.hotel.hotel_management.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 @Table(name = "credit_card")
 @Data
 public class CreditCard implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id

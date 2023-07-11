@@ -13,4 +13,5 @@ import java.util.List;
 @Repository
 public interface PaymentStatusRepository extends JpaRepository<PaymentStatus, Long> {
     List<PaymentStatus> findAllByIsActiveTrue();
+    PaymentStatus findByName(String name);
 }

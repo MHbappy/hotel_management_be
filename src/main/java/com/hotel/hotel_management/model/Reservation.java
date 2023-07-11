@@ -43,6 +43,6 @@ public class Reservation implements Serializable {
     private Room room;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "roles", "reservations", "payments", "creditCards" }, allowSetters = true)
+//    @JsonIgnoreProperties(value = { "roles", "reservations", "payments", "creditCards" }, allowSetters = true)
     private Users users;
 }

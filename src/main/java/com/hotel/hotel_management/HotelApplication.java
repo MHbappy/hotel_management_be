@@ -39,7 +39,7 @@ public class HotelApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... params) {
-		List<PaymentStatus> paymentStatusArrayList = Arrays.asList(new PaymentStatus(1l, "PENDING", true), new PaymentStatus(2l, "PAID", true));
+		List<PaymentStatus> paymentStatusArrayList = Arrays.asList(new PaymentStatus(1l, "CANCELLED", true), new PaymentStatus(2l, "PAID", true));
 		List<RoomAvailabilityStatus> roomAvailabilityStatusList = Arrays.asList(new RoomAvailabilityStatus(1l, "RESERVED", true), new RoomAvailabilityStatus(2l, "OPEN", true));
 		List<RoomStatus> roomStatusList = Arrays.asList(new RoomStatus(1l, "READY", true), new RoomStatus(2l, "NOT READY", true));
 		List<RoomType> roomTypeList = Arrays.asList(new RoomType(1l, "GORGEOUS", true), new RoomType(2l, "MID", true), new RoomType(3l, "LOW", true));

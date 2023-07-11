@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 /**
@@ -25,7 +26,7 @@ public class CheckInOut implements Serializable {
     private ZonedDateTime startDateTime;
 
     @Column(name = "end_date_time")
-    private ZonedDateTime endDateTime;
+    private LocalDateTime endDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "room", "users", "checkInOuts", "payments" }, allowSetters = true)
