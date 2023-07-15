@@ -24,14 +24,11 @@ public class CheckInOut implements Serializable {
     private Long id;
 
     @Column(name = "start_date_time")
-    private ZonedDateTime startDateTime;
+    private LocalDateTime startDateTime;
 
     @Column(name = "end_date_time")
     private LocalDateTime endDateTime;
 
     private CheckInStatus checkInStatus;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "room", "users", "checkInOuts", "payments" }, allowSetters = true)
-    private Reservation reservation;
 }

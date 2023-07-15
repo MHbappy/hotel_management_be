@@ -13,7 +13,6 @@ public class ReservationDTO {
     private Integer numberOfGuests;
     @NotNull
     private Long roomId;
-
     private Long userId;
     @NotNull
     private Long cardId;

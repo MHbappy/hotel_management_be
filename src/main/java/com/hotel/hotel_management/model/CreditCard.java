@@ -2,6 +2,8 @@ package com.hotel.hotel_management.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -29,6 +31,7 @@ public class CreditCard implements Serializable {
     private String cardHolderName;
 
     @Column(name = "expiration_date")
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate expirationDate;
 
     @Column(name = "cvv")

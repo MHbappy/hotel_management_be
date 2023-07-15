@@ -58,7 +58,7 @@ After finalizing reservations room avaiability will change to occupied.
 Dashboard, how many types of and status of rooms here..
 
 Reservation list by user(API)
-User Search with dropdown -> show user Information (So I need the search api with drop down)
+User Search with dropdown -> show user Information (So I need the search api with drop down)(done)
 Room Search With room type, price range, and dates, (So I need here a api with roomType, range and dates)
 Now Need Payment - Pop up for adding card.(add card with user api, check cupons, get card information for existing card for this user then okay) and Proceed.
 Reservation can canceled, when reservation cancelled then room will be available.
@@ -69,7 +69,7 @@ Show payment information by user.
 Checkout/Checkin information by user, checkin or chekout only possible if only reserved, so, we can do this with reservation list.
 
 Guest can do this without selecting users.
-getUserById by shr
+getUserById by shr(done)
 
 
 

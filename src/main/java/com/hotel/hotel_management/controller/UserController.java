@@ -99,22 +99,28 @@ public class UserController {
     return userService.updateUser(user);
   }
 
-//  @DeleteMapping(value = "/{username}")
-//  @PreAuthorize("hasRole('ROLE_ADMIN')")
-//  public String delete(@PathVariable String username) {
-//    userService.delete(username);
-//    return username;
-//  }
-
   @GetMapping(value = "/{username}")
 //  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public UserResponseDTO search(@PathVariable String username) {
     return modelMapper.map(userService.search(username), UserResponseDTO.class);
   }
 
+
+  @GetMapping(value = "/by-id/{id}")
+//  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  public UserResponseDTO search(@PathVariable Integer id) {
+    return modelMapper.map(userService.searchById(id), UserResponseDTO.class);
+  }
+
   @GetMapping(value = "/all-user")
   public Page<Users> allUser(@RequestParam(name = "email", defaultValue = "") String email, Pageable pageable) {
     return userService.allUserByEmail(email, pageable);
+  }
+
+
+  @GetMapping(value = "/users")
+  public List<Users> allUser(@RequestParam(name = "email", defaultValue = "") String email) {
+    return userService.allUserByEmail(email);
   }
 
   @GetMapping(value = "/me")

@@ -39,14 +39,15 @@ public class Reservation implements Serializable {
     private ReservationStatus reservationStatus;
 
     @Transient
-    private LocalDateTime currentDateTime;
+    private LocalDateTime currentDateTime = LocalDateTime.now();
 
     @ManyToOne
-//    @JsonIgnoreProperties(value = { "roomType", "roomStatus", "roomAvailabilityStatus", "reservations" }, allowSetters = true)
     @NotNull
     private Room room;
 
     @ManyToOne
-//    @JsonIgnoreProperties(value = { "roles", "reservations", "payments", "creditCards" }, allowSetters = true)
+    private CheckInOut checkInOut;
+
+    @ManyToOne
     private Users users;
 }

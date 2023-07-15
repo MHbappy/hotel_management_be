@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,22 +33,24 @@ public class CheckInOutResource {
     private final RoomAvailabilityStatusRepository roomAvailabilityStatusRepository;
     private final RoomRepository roomRepository;
 
-    @PostMapping("/checkin")
-    public ResponseEntity<CheckInOut> createCheckIn(@RequestBody Long checkInOutId) {
+    @PostMapping("/checkin/{checkInOutId}")
+    public ResponseEntity<CheckInOut> createCheckIn(@PathVariable Long checkInOutId) {
         CheckInOut checkInOutcheckInOut = checkInOutRepository.findById(checkInOutId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkinout not found!"));
         checkInOutcheckInOut.setCheckInStatus(CheckInStatus.CHECK_IN);
+        checkInOutcheckInOut.setStartDateTime(LocalDateTime.now());
         CheckInOut checkInOut = checkInOutRepository.save(checkInOutcheckInOut);
         return ResponseEntity.ok(checkInOut);
     }
 
-    @PostMapping("/checkout")
-    public ResponseEntity<CheckInOut> createCheckOut(@RequestBody Long checkInOutId) {
+    @PostMapping("/checkout/{checkInOutId}")
+    public ResponseEntity<CheckInOut> createCheckOut(@PathVariable Long checkInOutId) {
         CheckInOut checkInOutcheckInOut = checkInOutRepository.findById(checkInOutId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkinout not found!"));
         checkInOutcheckInOut.setCheckInStatus(CheckInStatus.CHECK_OUT);
-        RoomAvailabilityStatus roomAvailabilityStatus = roomAvailabilityStatusRepository.findByName(Constrains.roomAvailabilityStatusOpen);
-        checkInOutcheckInOut.getReservation().getRoom().setRoomAvailabilityStatus(roomAvailabilityStatus);
+        checkInOutcheckInOut.setEndDateTime(LocalDateTime.now());
+//        RoomAvailabilityStatus roomAvailabilityStatus = roomAvailabilityStatusRepository.findByName(Constrains.roomAvailabilityStatusOpen);
+//        checkInOutcheckInOut.getReservation().getRoom().setRoomAvailabilityStatus(roomAvailabilityStatus);
         //change room status
-        roomRepository.save(checkInOutcheckInOut.getReservation().getRoom());
+//        roomRepository.save(checkInOutcheckInOut.getReservation().getRoom());
         CheckInOut checkInOut = checkInOutRepository.save(checkInOutcheckInOut);
         return ResponseEntity.ok(checkInOut);
     }

@@ -25,6 +25,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -70,6 +73,15 @@ public class UserService {
     return appUser;
   }
 
+
+  public Users searchById(Integer id) {
+    Optional<Users> appUser = userRepository.findById(id);
+    if (appUser.isEmpty()) {
+      throw new CustomException("The user doesn't exist", HttpStatus.NOT_FOUND);
+    }
+    return appUser.get();
+  }
+
   public Users searchWithoutException(String email) {
     Users appUser = userRepository.findByEmail(email);
     return appUser;
@@ -104,6 +116,12 @@ public class UserService {
 
   public Page<Users> allUserByEmail(String email, Pageable pageable) {
     Page<Users> appUser = userRepository.findAllByIsActiveAndEmailContainingIgnoreCase(true, email, pageable);
+    return appUser;
+  }
+
+
+  public List<Users> allUserByEmail(String email) {
+    List<Users> appUser = userRepository.findAllByIsActiveAndEmailContainingIgnoreCase(true, email);
     return appUser;
   }
 

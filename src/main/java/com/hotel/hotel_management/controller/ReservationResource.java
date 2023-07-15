@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
@@ -45,9 +47,14 @@ public class ReservationResource {
 
     //Add payment
     @PostMapping("/reservations")
-    public ResponseEntity<Reservation> createReservation(@RequestBody ReservationDTO reservation) throws URISyntaxException {
+    public ResponseEntity<Reservation> createReservation(@RequestBody @Valid ReservationDTO reservation) throws URISyntaxException {
         log.debug("REST request to save Reservation : {}", reservation);
-        Reservation newReservation = modelMapper.map(reservation, Reservation.class);
+//        Reservation newReservation = modelMapper.map(reservation, Reservation.class);
+
+        Reservation newReservation  = new Reservation();
+        newReservation.setStartDate(reservation.getStartDate());
+        newReservation.setEndDate(reservation.getEndDate());
+        newReservation.setNumberOfGuests(reservation.getNumberOfGuests());
 
         Boolean isGuest = SecurityUtils.hasCurrentUserThisAuthority(Constrains.guest);
         if (isGuest){
@@ -63,17 +70,24 @@ public class ReservationResource {
         //Change room status
         if (reservation.getRoomId() != null){
             Room room = roomRepository.findById(reservation.getRoomId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room id invalid!"));
-            if (room.getRoomAvailabilityStatus().getName().equals(Constrains.roomAvailabilityStatusReserved)){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room already reserved, please checkout the guest first!");
-            }
+//            if (room.getRoomAvailabilityStatus().getName().equals(Constrains.roomAvailabilityStatusReserved)){
+//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room already reserved, please checkout the guest first!");
+//            }
             if (reservation.getNumberOfGuests() > room.getMaxGuests()){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room maximum guest exceed!");
             }
-            RoomAvailabilityStatus roomAvailabilityStatus = roomAvailabilityStatusRepository.findByName(Constrains.roomAvailabilityStatusReserved);
-            room.setRoomAvailabilityStatus(roomAvailabilityStatus);
-            roomRepository.save(room);
+//            RoomAvailabilityStatus roomAvailabilityStatus = roomAvailabilityStatusRepository.findByName(Constrains.roomAvailabilityStatusReserved);
+//            room.setRoomAvailabilityStatus(roomAvailabilityStatus);
+//            roomRepository.save(room);
+            newReservation.setRoom(room);
         }
         newReservation.setReservationStatus(ReservationStatus.RESERVED);
+
+        CheckInOut checkInOut = new CheckInOut();
+        checkInOut.setCheckInStatus(CheckInStatus.CHECK_IN);
+        CheckInOut savedCheckInOut = checkInOutRepository.save(checkInOut);
+        newReservation.setCheckInOut(savedCheckInOut);
+
         Reservation result = reservationService.save(newReservation);
 
         //Checkin without date
@@ -89,11 +103,6 @@ public class ReservationResource {
             payment.setCreditCard(creditCard);
             payment.setPaymentDateTime(LocalDateTime.now());
             payment.setAmount(reservation.getPrice());
-
-            CheckInOut checkInOut = new CheckInOut();
-            checkInOut.setReservation(result);
-            checkInOut.setCheckInStatus(CheckInStatus.CHECK_IN);
-            checkInOutRepository.save(checkInOut);
             paymentRepository.save(payment);
         }
 
@@ -118,7 +127,11 @@ public class ReservationResource {
         if (!reservationRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id");
         }
-        Reservation updatedReservation = modelMapper.map(reservation, Reservation.class);
+
+        Reservation updatedReservation = reservationRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id"));
+        updatedReservation.setNumberOfGuests(reservation.getNumberOfGuests());
+        updatedReservation.setReservationStatus(reservation.getReservationStatus());
+
         Reservation result = reservationService.update(updatedReservation);
         return ResponseEntity
             .ok()

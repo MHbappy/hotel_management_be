@@ -46,7 +46,7 @@ public class CreditCardService {
     }
     
     @Transactional(readOnly = true)
-    public List<CreditCard> findAll(Long userId) {
+    public List<CreditCard> findAll(Integer userId) {
         log.debug("Request to get all CreditCards");
         if (userId != null){
             return creditCardRepository.findAllByIsActiveTrueAndUsers_Id(userId);

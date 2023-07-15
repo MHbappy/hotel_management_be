@@ -64,7 +64,7 @@ public class CreditCardResource {
     }
 
     @GetMapping("/credit-cards")
-    public List<CreditCard> getAllCreditCards(@RequestParam(required = false) Long userId) {
+    public List<CreditCard> getAllCreditCards(@RequestParam(required = false) Integer userId) {
         log.debug("REST request to get all CreditCards");
         return creditCardService.findAll(userId);
     }

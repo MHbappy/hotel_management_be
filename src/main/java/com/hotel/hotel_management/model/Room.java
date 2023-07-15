@@ -40,7 +40,6 @@ public class Room implements Serializable {
     @NotNull
     private Integer maxGuests;
 
-    @Lob
     @Column(name = "description")
     private String description;
 
@@ -54,8 +53,8 @@ public class Room implements Serializable {
     @ManyToOne
     private RoomStatus roomStatus;
 
-    @ManyToOne
-    private RoomAvailabilityStatus roomAvailabilityStatus;
+//    @ManyToOne
+//    private RoomAvailabilityStatus roomAvailabilityStatus;
 
     private Boolean isActive;
 }
