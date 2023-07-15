@@ -4,8 +4,11 @@ import com.hotel.hotel_management.model.Room;
 import com.hotel.hotel_management.repository.RoomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +37,13 @@ public class RoomService {
     @Transactional(readOnly = true)
     public List<Room> findAll() {
         log.debug("Request to get all Rooms");
-        return roomRepository.findAll();
+        return roomRepository.findAllByIsActiveTrue();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Room> findAllActiveInactiveRoom() {
+        log.debug("Request to get all Rooms");
+        return roomRepository.findAllByIsActiveTrue();
     }
 
     
@@ -47,6 +56,8 @@ public class RoomService {
     
     public void delete(Long id) {
         log.debug("Request to delete Room : {}", id);
-        roomRepository.deleteById(id);
+        Room room = roomRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room not found"));
+        room.setIsActive(false);
+        roomRepository.save(room);
     }
 }

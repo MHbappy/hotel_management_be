@@ -56,4 +56,6 @@ public class Room implements Serializable {
 
     @ManyToOne
     private RoomAvailabilityStatus roomAvailabilityStatus;
+
+    private Boolean isActive;
 }

@@ -1,6 +1,7 @@
 package com.hotel.hotel_management.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hotel.hotel_management.enumuration.CheckInStatus;
 import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,7 +29,9 @@ public class CheckInOut implements Serializable {
     @Column(name = "end_date_time")
     private LocalDateTime endDateTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    private CheckInStatus checkInStatus;
+
+    @ManyToOne
     @JsonIgnoreProperties(value = { "room", "users", "checkInOuts", "payments" }, allowSetters = true)
     private Reservation reservation;
 }

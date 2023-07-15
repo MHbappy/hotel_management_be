@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -62,8 +63,15 @@ public class RoomResource {
     }
 
     @GetMapping("/rooms")
-    public List<Room> getAllRooms() {
+    public List<Room> getAllRooms(@RequestParam(value = "roomStatusId", required = false) Long roomStatusId, @RequestParam(value = "price", required = false) Long price,  @RequestParam(value = "date", required = false) LocalDate date) {
         log.debug("REST request to get all Rooms");
+        if (roomStatusId != null && price != null && date != null){
+            return roomRepository.getRoomByRoomStatusIdDateBetweenAndPriceRange(roomStatusId, price, date);
+        }else if (roomStatusId != null && price != null){
+            return roomRepository.getRoomByRoomStatusIdPrice(roomStatusId, price);
+        }else if (date != null){
+            return roomRepository.findAllByRoomStatus_IdAndIsActiveTrue(roomStatusId);
+        }
         return roomService.findAll();
     }
 

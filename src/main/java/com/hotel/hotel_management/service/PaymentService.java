@@ -57,6 +57,9 @@ public class PaymentService {
     @Transactional(readOnly = true)
     public List<Payment> findAll() {
         log.debug("Request to get all Payments");
+
+
+
         return paymentRepository.findAll();
     }
 

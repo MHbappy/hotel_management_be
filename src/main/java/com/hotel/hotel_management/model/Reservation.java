@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * A Reservation.
@@ -36,6 +37,9 @@ public class Reservation implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
+
+    @Transient
+    private LocalDateTime currentDateTime;
 
     @ManyToOne
 //    @JsonIgnoreProperties(value = { "roomType", "roomStatus", "roomAvailabilityStatus", "reservations" }, allowSetters = true)

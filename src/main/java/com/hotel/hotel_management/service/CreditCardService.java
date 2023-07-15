@@ -1,71 +1,57 @@
 package com.hotel.hotel_management.service;
 
+import com.hotel.hotel_management.configuration.Constrains;
 import com.hotel.hotel_management.model.CreditCard;
+import com.hotel.hotel_management.model.Users;
 import com.hotel.hotel_management.repository.CreditCardRepository;
+import com.hotel.hotel_management.repository.ReservationRepository;
+import com.hotel.hotel_management.repository.UserRepository;
+import com.hotel.hotel_management.security.SecurityUtils;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CreditCardService {
 
     private final Logger log = LoggerFactory.getLogger(CreditCardService.class);
 
     private final CreditCardRepository creditCardRepository;
+    private final UserRepository userRepository;
 
-    public CreditCardService(CreditCardRepository creditCardRepository) {
-        this.creditCardRepository = creditCardRepository;
-    }
-
-    
     public CreditCard save(CreditCard creditCard) {
         log.debug("Request to save CreditCard : {}", creditCard);
         return creditCardRepository.save(creditCard);
     }
 
-    
     public CreditCard update(CreditCard creditCard) {
         log.debug("Request to update CreditCard : {}", creditCard);
+
+        Boolean isGuest = SecurityUtils.hasCurrentUserThisAuthority(Constrains.guest);
+        if (isGuest) {
+            String userName = SecurityUtils.getCurrentUserLogin().get();
+            Users user = userRepository.findByEmail(userName);
+            creditCard.setUsers(user);
+        }
         return creditCardRepository.save(creditCard);
     }
-
-    
-    public Optional<CreditCard> partialUpdate(CreditCard creditCard) {
-        log.debug("Request to partially update CreditCard : {}", creditCard);
-
-        return creditCardRepository
-            .findById(creditCard.getId())
-            .map(existingCreditCard -> {
-                if (creditCard.getCardNumber() != null) {
-                    existingCreditCard.setCardNumber(creditCard.getCardNumber());
-                }
-                if (creditCard.getCardHolderName() != null) {
-                    existingCreditCard.setCardHolderName(creditCard.getCardHolderName());
-                }
-                if (creditCard.getExpirationDate() != null) {
-                    existingCreditCard.setExpirationDate(creditCard.getExpirationDate());
-                }
-                if (creditCard.getCvv() != null) {
-                    existingCreditCard.setCvv(creditCard.getCvv());
-                }
-                if (creditCard.getCustomerId() != null) {
-                    existingCreditCard.setCustomerId(creditCard.getCustomerId());
-                }
-
-                return existingCreditCard;
-            })
-            .map(creditCardRepository::save);
-    }
-
     
     @Transactional(readOnly = true)
-    public List<CreditCard> findAll() {
+    public List<CreditCard> findAll(Long userId) {
         log.debug("Request to get all CreditCards");
-        return creditCardRepository.findAll();
+        if (userId != null){
+            return creditCardRepository.findAllByIsActiveTrueAndUsers_Id(userId);
+        }
+        return creditCardRepository.findAllByIsActiveTrue();
     }
 
     
@@ -78,6 +64,8 @@ public class CreditCardService {
     
     public void delete(Long id) {
         log.debug("Request to delete CreditCard : {}", id);
-        creditCardRepository.deleteById(id);
+        CreditCard creditCard = creditCardRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Credit card not found!"));
+        creditCard.setIsActive(true);
+        creditCardRepository.save(creditCard);
     }
 }

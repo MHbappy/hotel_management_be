@@ -20,9 +20,7 @@ import java.util.Optional;
 public class CreditCardResource {
 
     private final Logger log = LoggerFactory.getLogger(CreditCardResource.class);
-
     private final CreditCardService creditCardService;
-
     private final CreditCardRepository creditCardRepository;
 
     public CreditCardResource(CreditCardService creditCardService, CreditCardRepository creditCardRepository) {
@@ -66,9 +64,9 @@ public class CreditCardResource {
     }
 
     @GetMapping("/credit-cards")
-    public List<CreditCard> getAllCreditCards() {
+    public List<CreditCard> getAllCreditCards(@RequestParam(required = false) Long userId) {
         log.debug("REST request to get all CreditCards");
-        return creditCardService.findAll();
+        return creditCardService.findAll(userId);
     }
 
     @GetMapping("/credit-cards/{id}")

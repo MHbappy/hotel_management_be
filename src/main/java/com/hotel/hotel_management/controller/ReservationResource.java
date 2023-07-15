@@ -3,6 +3,7 @@ package com.hotel.hotel_management.controller;
 import com.hotel.hotel_management.configuration.Constrains;
 import com.hotel.hotel_management.dto.ReservationDTO;
 import com.hotel.hotel_management.dto.ReservationUpdateDTO;
+import com.hotel.hotel_management.enumuration.CheckInStatus;
 import com.hotel.hotel_management.enumuration.ReservationStatus;
 import com.hotel.hotel_management.model.*;
 import com.hotel.hotel_management.repository.*;
@@ -39,6 +40,7 @@ public class ReservationResource {
     private final CreditCardRepository creditCardRepository;
     private final PaymentRepository paymentRepository;
     private final PaymentStatusRepository paymentStatusRepository;
+    private final CheckInOutRepository checkInOutRepository;
     private final ModelMapper modelMapper;
 
     //Add payment
@@ -73,6 +75,9 @@ public class ReservationResource {
         }
         newReservation.setReservationStatus(ReservationStatus.RESERVED);
         Reservation result = reservationService.save(newReservation);
+
+        //Checkin without date
+
         //Add Payment
         if (reservation.getCardId() != null){
             Payment payment = new Payment();
@@ -84,8 +89,14 @@ public class ReservationResource {
             payment.setCreditCard(creditCard);
             payment.setPaymentDateTime(LocalDateTime.now());
             payment.setAmount(reservation.getPrice());
+
+            CheckInOut checkInOut = new CheckInOut();
+            checkInOut.setReservation(result);
+            checkInOut.setCheckInStatus(CheckInStatus.CHECK_IN);
+            checkInOutRepository.save(checkInOut);
             paymentRepository.save(payment);
         }
+
         return ResponseEntity
             .created(new URI("/api/reservations/" + result.getId()))
             .body(result);

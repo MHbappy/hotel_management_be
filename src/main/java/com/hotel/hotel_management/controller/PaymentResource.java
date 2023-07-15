@@ -37,38 +37,38 @@ public class PaymentResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new payment, or with status {@code 400 (Bad Request)} if the payment has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/payments")
-    public ResponseEntity<Payment> createPayment(@RequestBody Payment payment) throws URISyntaxException {
-        log.debug("REST request to save Payment : {}", payment);
-        if (payment.getId() != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A new payment cannot already have an ID");
-        }
-        Payment result = paymentService.save(payment);
-        return ResponseEntity
-            .created(new URI("/api/payments/" + result.getId()))
-            .body(result);
-    }
+//    @PostMapping("/payments")
+//    public ResponseEntity<Payment> createPayment(@RequestBody Payment payment) throws URISyntaxException {
+//        log.debug("REST request to save Payment : {}", payment);
+//        if (payment.getId() != null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A new payment cannot already have an ID");
+//        }
+//        Payment result = paymentService.save(payment);
+//        return ResponseEntity
+//            .created(new URI("/api/payments/" + result.getId()))
+//            .body(result);
+//    }
 
-    @PutMapping("/payments/{id}")
-    public ResponseEntity<Payment> updatePayment(@PathVariable(value = "id", required = false) final Long id, @RequestBody Payment payment)
-        throws URISyntaxException {
-        log.debug("REST request to update Payment : {}, {}", id, payment);
-        if (payment.getId() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id");
-        }
-        if (!Objects.equals(id, payment.getId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid ID");
-        }
-
-        if (!paymentRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entity not found");
-        }
-
-        Payment result = paymentService.update(payment);
-        return ResponseEntity
-            .ok()
-            .body(result);
-    }
+//    @PutMapping("/payments/{id}")
+//    public ResponseEntity<Payment> updatePayment(@PathVariable(value = "id", required = false) final Long id, @RequestBody Payment payment)
+//        throws URISyntaxException {
+//        log.debug("REST request to update Payment : {}, {}", id, payment);
+//        if (payment.getId() == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id");
+//        }
+//        if (!Objects.equals(id, payment.getId())) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid ID");
+//        }
+//
+//        if (!paymentRepository.existsById(id)) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entity not found");
+//        }
+//
+//        Payment result = paymentService.update(payment);
+//        return ResponseEntity
+//            .ok()
+//            .body(result);
+//    }
 
     @GetMapping("/payments")
     public List<Payment> getAllPayments() {
@@ -76,19 +76,19 @@ public class PaymentResource {
         return paymentService.findAll();
     }
 
-    @GetMapping("/payments/{id}")
-    public ResponseEntity<Payment> getPayment(@PathVariable Long id) {
-        log.debug("REST request to get Payment : {}", id);
-        Optional<Payment> payment = paymentService.findOne(id);
-        return ResponseEntity.ok(payment.get());
-    }
+//    @GetMapping("/payments/{id}")
+//    public ResponseEntity<Payment> getPayment(@PathVariable Long id) {
+//        log.debug("REST request to get Payment : {}", id);
+//        Optional<Payment> payment = paymentService.findOne(id);
+//        return ResponseEntity.ok(payment.get());
+//    }
 
-    @DeleteMapping("/payments/{id}")
-    public ResponseEntity<Void> deletePayment(@PathVariable Long id) {
-        log.debug("REST request to delete Payment : {}", id);
-        paymentService.delete(id);
-        return ResponseEntity
-            .noContent()
-            .build();
-    }
+//    @DeleteMapping("/payments/{id}")
+//    public ResponseEntity<Void> deletePayment(@PathVariable Long id) {
+//        log.debug("REST request to delete Payment : {}", id);
+//        paymentService.delete(id);
+//        return ResponseEntity
+//            .noContent()
+//            .build();
+//    }
 }

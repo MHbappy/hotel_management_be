@@ -3,6 +3,7 @@ package com.hotel.hotel_management.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -36,7 +37,9 @@ public class CreditCard implements Serializable {
     @Column(name = "customer_id")
     private Long customerId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "roles", "reservations", "payments", "creditCards" }, allowSetters = true)
+    @ManyToOne
+    @NotNull
     private Users users;
+
+    Boolean isActive = true;
 }
