@@ -8,12 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -77,6 +79,11 @@ public class SpecialOfferResource {
         log.debug("REST request to get SpecialOffer : {}", id);
         Optional<SpecialOffer> specialOffer = specialOfferService.findOne(id);
         return ResponseEntity.ok(specialOffer.get());
+    }
+
+    @GetMapping("/special-offers-by-date-and-room-type")
+    public SpecialOffer findAllByRoomTypeAndDateBetween(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @RequestParam(value = "roomTypeId") Integer roomTypeId){
+        return specialOfferService.findAllByRoomTypeAndDateBetween(date, roomTypeId);
     }
 
     /**

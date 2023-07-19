@@ -73,5 +73,11 @@ getUserById by shr(done)
 
 
 
+-----------------------------------------
+Room e title and name will be minimum 3 digit(front end validation)
+Reservation niye aro kaj ase
+
+
+
 
 

@@ -23,7 +23,9 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query(value = "select * from room r where room_status_id = :roomStatusId AND :price <= price_per_night AND r.is_active = true", nativeQuery = true)
     List<Room> getRoomByRoomStatusIdPrice(@Param("roomStatusId") Long roomStatusId, @Param("price") Long price);
     Page<Room> findAllByIsActiveTrue(Pageable pageable);
-    Page<Room> findAllByTitleContainingAndIsActiveTrue(String title, Pageable pageable);
+    Page<Room> findAllByTitleContainingIgnoreCaseAndIsActiveTrue(String title, Pageable pageable);
+    @Query(value = "select * from room where room_number = :roomNumber AND is_active = true LIMIT 1", nativeQuery = true)
+    Room findByRoomNumberAndIsActiveLimitOne(@Param("roomNumber")String roomNumber);
     @Query(value = "select r.* from room r left join reservation r2 on r.id = r2.room_id where ((:date NOT between start_date AND end_date) OR (start_date IS NULL)) AND r.is_active = true", nativeQuery = true)
     Page<Room> getRoomByRoomDateBetween(@Param("date") LocalDate date, Pageable pageable);
     @Query(value = "select r.* from room r left join reservation r2 on r.id = r2.room_id where ((:date NOT between start_date AND end_date) OR (start_date IS NULL)) AND room_status_id = :roomStatusId AND r.is_active = true", nativeQuery = true)

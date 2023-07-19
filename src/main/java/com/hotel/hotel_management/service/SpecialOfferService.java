@@ -4,11 +4,14 @@ import com.hotel.hotel_management.model.SpecialOffer;
 import com.hotel.hotel_management.repository.SpecialOfferRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +34,10 @@ public class SpecialOfferService {
     public SpecialOffer update(SpecialOffer specialOffer) {
         log.debug("Request to update SpecialOffer : {}", specialOffer);
         return specialOfferRepository.save(specialOffer);
+    }
+
+    public SpecialOffer findAllByRoomTypeAndDateBetween(LocalDate date, Integer roomTypeId){
+        return specialOfferRepository.findAllByRoomTypeAndDateBetween(date, roomTypeId);
     }
     
     @Transactional(readOnly = true)

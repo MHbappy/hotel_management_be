@@ -13,9 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -33,7 +35,7 @@ public class RoomResource {
     }
 
     @PostMapping("/rooms")
-    public ResponseEntity<Room> createRoom(@RequestBody Room room) throws URISyntaxException {
+    public ResponseEntity<Room> createRoom(@RequestBody @Valid Room room) throws URISyntaxException {
         log.debug("REST request to save Room : {}", room);
         if (room.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A new room cannot already have an ID");
@@ -81,7 +83,13 @@ public class RoomResource {
         if (title == null) {
             return roomRepository.findAllByIsActiveTrue(pageable);
         }
-        return roomRepository.findAllByTitleContainingAndIsActiveTrue(title, pageable);
+        return roomRepository.findAllByTitleContainingIgnoreCaseAndIsActiveTrue(title, pageable);
+    }
+
+
+    @GetMapping("/rooms-without-pagination")
+    public List<Room> getAllWithouPaginationRooms() {
+        return roomRepository.findAllByIsActiveTrue();
     }
 
     @GetMapping("/rooms/{id}")

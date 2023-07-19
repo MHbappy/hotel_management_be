@@ -26,6 +26,10 @@ public class RoomService {
 
     public Room save(Room room) {
         log.debug("Request to save Room : {}", room);
+        Room roomWithRoomNumber = roomRepository.findByRoomNumberAndIsActiveLimitOne(room.getRoomNumber());
+        if (roomWithRoomNumber != null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room number already exist!");
+        }
         return roomRepository.save(room);
     }
 

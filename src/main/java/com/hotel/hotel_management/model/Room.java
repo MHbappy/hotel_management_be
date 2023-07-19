@@ -40,7 +40,7 @@ public class Room implements Serializable {
     @NotNull
     private Integer maxGuests;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 1000)
     private String description;
 
     @Column(name = "image")
