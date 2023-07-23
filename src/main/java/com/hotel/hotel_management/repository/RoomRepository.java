@@ -32,4 +32,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Page<Room> getRoomByRoomDateBetweenAndStatusId(@Param("date") LocalDate date, @Param("roomStatusId") Long roomStatusId, Pageable pageable);
     @Query(value = "select r.* from room r left join reservation r2 on r.id = r2.room_id where ((:date NOT between start_date AND end_date) OR (start_date IS NULL)) AND room_status_id = :roomStatusId AND (price_per_night between :startPrice AND :endPrice) AND r.is_active = true", nativeQuery = true)
     Page<Room> getRoomByRoomDateBetweenAndStatusIdAndPriceRange(@Param("date") LocalDate date, @Param("roomStatusId") Long roomStatusId, @Param("startPrice") Long startPrice, @Param("endPrice") Long endPrice, Pageable pageable);
+    @Query(value = "select r.* from room r left join reservation r2 on r.id = r2.room_id where ((:startDate NOT between start_date AND end_date) AND (:endDate NOT between start_date AND end_date)) AND r.is_active = true", nativeQuery = true)
+    List<Room> getAvailableRoomWithDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

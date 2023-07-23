@@ -78,6 +78,11 @@ public class RoomResource {
         return roomRepository.getRoomByRoomDateBetween(date, pageable);
     }
 
+    @GetMapping("/all-available-room-with-date-range")
+    public List<Room> getAllAvailableRoom(@RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return roomRepository.getAvailableRoomWithDateRange(startDate, endDate);
+    }
+
     @GetMapping("/rooms")
     public Page<Room> getAllRooms(@RequestParam(value = "title", required = false) String title, Pageable pageable) {
         if (title == null) {

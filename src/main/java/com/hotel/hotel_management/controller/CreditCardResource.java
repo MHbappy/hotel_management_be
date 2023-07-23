@@ -35,6 +35,7 @@ public class CreditCardResource {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A new creditCard cannot already have an ID");
         }
         CreditCard result = creditCardService.save(creditCard);
+
         return ResponseEntity
             .created(new URI("/api/credit-cards/" + result.getId()))
             .body(result);

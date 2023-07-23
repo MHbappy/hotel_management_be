@@ -70,15 +70,9 @@ public class ReservationResource {
         //Change room status
         if (reservation.getRoomId() != null){
             Room room = roomRepository.findById(reservation.getRoomId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room id invalid!"));
-//            if (room.getRoomAvailabilityStatus().getName().equals(Constrains.roomAvailabilityStatusReserved)){
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room already reserved, please checkout the guest first!");
-//            }
             if (reservation.getNumberOfGuests() > room.getMaxGuests()){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room maximum guest exceed!");
             }
-//            RoomAvailabilityStatus roomAvailabilityStatus = roomAvailabilityStatusRepository.findByName(Constrains.roomAvailabilityStatusReserved);
-//            room.setRoomAvailabilityStatus(roomAvailabilityStatus);
-//            roomRepository.save(room);
             newReservation.setRoom(room);
         }
         newReservation.setReservationStatus(ReservationStatus.RESERVED);
@@ -151,12 +145,11 @@ public class ReservationResource {
         return ResponseEntity.ok(reservation.get());
     }
 
-//    @DeleteMapping("/reservations/{id}")
-//    public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
-//        log.debug("REST request to delete Reservation : {}", id);
-//        reservationService.delete(id);
-//        return ResponseEntity
-//            .noContent()
-//            .build();
-//    }
+    @GetMapping("/cancel-reservation")
+    public ResponseEntity<Reservation> changeReservation(@RequestParam Long id) {
+        Reservation reservation = reservationService.findOne(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id"));
+        reservation.setReservationStatus(ReservationStatus.CANCELLED);
+        Reservation reservation1 = reservationRepository.save(reservation);
+        return ResponseEntity.ok(reservation1);
+    }
 }
