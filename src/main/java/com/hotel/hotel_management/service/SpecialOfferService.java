@@ -36,8 +36,8 @@ public class SpecialOfferService {
         return specialOfferRepository.save(specialOffer);
     }
 
-    public SpecialOffer findAllByRoomTypeAndDateBetween(LocalDate date, Integer roomTypeId){
-        return specialOfferRepository.findAllByRoomTypeAndDateBetween(date, roomTypeId);
+    public SpecialOffer findAllByRoomTypeAndDateBetween(String code, LocalDate date, Integer roomTypeId){
+        return specialOfferRepository.findAllByRoomTypeAndDateBetween(code, date, roomTypeId);
     }
     
     @Transactional(readOnly = true)

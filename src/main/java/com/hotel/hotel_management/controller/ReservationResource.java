@@ -145,11 +145,11 @@ public class ReservationResource {
         return ResponseEntity.ok(reservation.get());
     }
 
-    @GetMapping("/cancel-reservation")
-    public ResponseEntity<Reservation> changeReservation(@RequestParam Long id) {
-        Reservation reservation = reservationService.findOne(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id"));
-        reservation.setReservationStatus(ReservationStatus.CANCELLED);
-        Reservation reservation1 = reservationRepository.save(reservation);
-        return ResponseEntity.ok(reservation1);
-    }
+//    @GetMapping("/cancel-reservation")
+//    public ResponseEntity<Reservation> changeReservation(@RequestParam Long id) {
+//        Reservation reservation = reservationService.findOne(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id"));
+//        reservation.setReservationStatus(ReservationStatus.CANCELLED);
+//        Reservation reservation1 = reservationRepository.save(reservation);
+//        return ResponseEntity.ok(reservation1);
+//    }
 }

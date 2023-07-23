@@ -16,6 +16,6 @@ import java.util.List;
 public interface SpecialOfferRepository extends JpaRepository<SpecialOffer, Long> {
     Boolean existsByOfferCodeAndIsActiveTrue(String code);
     List<SpecialOffer> findAllByIsActiveTrue();
-    @Query(value = "select * from special_offer where :date between start_date AND end_date AND room_type_id = :roomTypeId AND is_active = true LIMIT 1", nativeQuery = true)
-    SpecialOffer findAllByRoomTypeAndDateBetween(@Param("date") LocalDate date, @Param("roomTypeId")Integer roomTypeId);
+    @Query(value = "select * from special_offer where :date between start_date AND end_date AND room_type_id = :roomTypeId AND is_active = true AND offer_code = :code LIMIT 1", nativeQuery = true)
+    SpecialOffer findAllByRoomTypeAndDateBetween(@Param("code") String code, @Param("date") LocalDate date, @Param("roomTypeId")Integer roomTypeId);
 }

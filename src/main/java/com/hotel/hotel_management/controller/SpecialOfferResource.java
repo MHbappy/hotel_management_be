@@ -82,8 +82,8 @@ public class SpecialOfferResource {
     }
 
     @GetMapping("/special-offers-by-date-and-room-type")
-    public SpecialOffer findAllByRoomTypeAndDateBetween(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @RequestParam(value = "roomTypeId") Integer roomTypeId){
-        return specialOfferService.findAllByRoomTypeAndDateBetween(date, roomTypeId);
+    public SpecialOffer findAllByRoomTypeAndDateBetween(@RequestParam(value = "code") String code, @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @RequestParam(value = "roomTypeId") Integer roomTypeId){
+        return specialOfferService.findAllByRoomTypeAndDateBetween(code, date, roomTypeId);
     }
 
     /**

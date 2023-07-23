@@ -85,25 +85,23 @@ Create two api for card and chart(backend).
 Integrate these api with front end.(front end)
 
 Room:
-    Search room e reservation er ekta button thakbe(front end)/-----api/all-available-room-with-date-range
+    Search room e reservation er ekta button thakbe(front end)/-----
     Room can be add only admin(front end)
     Not selecting today at calendar
+
+    api/all-available-room-with-date-range
 
 Reservation:
     when avaialabe room, pass date also show Room list on reservation only not reserved(api check backend)
     Add cupon(front end)
     Edit reservation staff and admin(front end)
-    Can cancel reservation(check api backend and front end also)-----/api/cancel-reservation
 
 When Add credit card, for guest and admin. Can select user.
 
 
-
-
-
 Admin - can do everything
 Staff - with out create user can do everything
-Guest - Can not create Room, Offer
+Guest - Can not create Room, Offer, canc not create user.
 
 
 
