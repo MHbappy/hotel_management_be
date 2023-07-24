@@ -59,9 +59,9 @@ public class ReservationResource {
         newReservation.setNumberOfGuests(reservation.getNumberOfGuests());
 
         Boolean isGuest = SecurityUtils.hasCurrentUserThisAuthority(Constrains.guest);
+        String userName = SecurityUtils.getCurrentUserLogin().get();
+        Users user = userRepository.findByEmail(userName);
         if (isGuest){
-            String userName = SecurityUtils.getCurrentUserLogin().get();
-            Users user = userRepository.findByEmail(userName);
             newReservation.setUsers(user);
         }else {
             if (reservation.getUserId() == null){
@@ -94,6 +94,7 @@ public class ReservationResource {
             CreditCard creditCard = creditCardRepository.findById(reservation.getCardId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Credit card id invalid!"));
             PaymentStatus paymentStatus = paymentStatusRepository.findByName(Constrains.paymentStatusPaid);
             payment.setReservation(result);
+            payment.setUsers(user);
             payment.setPaymentStatus(paymentStatus);
             payment.setUsers(newReservation.getUsers());
             payment.setCreditCard(creditCard);
