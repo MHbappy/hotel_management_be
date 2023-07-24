@@ -53,4 +53,7 @@ public class Users {
           inverseJoinColumns = {@JoinColumn(name = "role_name", referencedColumnName = "name")})
   private Set<Roles> roles = new HashSet<>();
 
+  public Users(Integer id) {
+    this.id = id;
+  }
 }

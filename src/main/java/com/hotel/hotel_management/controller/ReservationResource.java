@@ -64,6 +64,7 @@ public class ReservationResource {
         if (isGuest){
             newReservation.setUsers(user);
         }else {
+            newReservation.setUsers(new Users(reservation.getUserId()));
             if (reservation.getUserId() == null){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please add a user");
             }

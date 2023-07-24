@@ -13,7 +13,7 @@ public class ReservationDTO {
     private Integer numberOfGuests;
     @NotNull
     private Long roomId;
-    private Long userId;
+    private Integer userId;
     @NotNull
     private Long cardId;
     @NotNull
