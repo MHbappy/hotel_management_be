@@ -4,6 +4,8 @@ import com.hotel.hotel_management.model.Reservation;
 import com.hotel.hotel_management.model.Users;
 import com.hotel.hotel_management.model.projection.DashBoardCardInfo;
 import com.hotel.hotel_management.model.projection.DayWiseReservationCount;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,7 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findAllByUsers(Users users);
+    Page<Reservation> findAllByUsers(Users users, Pageable pageable);
     @Query(value = "select count(id), start_date as startDate from reservation where start_date > now() - interval '30 day' group by start_date order by start_date asc", nativeQuery = true)
     List<DayWiseReservationCount> getDayWiseReservation();
     @Query(value = "select count(room_type_id), rs.name\n" +

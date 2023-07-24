@@ -9,9 +9,10 @@ import com.hotel.hotel_management.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -38,15 +39,15 @@ public class ReservationService {
     }
     
     @Transactional(readOnly = true)
-    public List<Reservation> findAll() {
+    public Page<Reservation> findAll(Pageable pageable) {
         log.debug("Request to get all Reservations");
         Boolean isGuest = SecurityUtils.hasCurrentUserThisAuthority(Constrains.guest);
         if (isGuest){
             String userName = SecurityUtils.getCurrentUserLogin().get();
             Users user = userRepository.findByEmail(userName);
-            return reservationRepository.findAllByUsers(user);
+            return reservationRepository.findAllByUsers(user, pageable);
         }
-        return reservationRepository.findAll();
+        return reservationRepository.findAll(pageable);
     }
     
     @Transactional(readOnly = true)

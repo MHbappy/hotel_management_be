@@ -85,7 +85,7 @@ Create two api for card and chart(backend).
 Integrate these api with front end.(front end)
 
 Room:
-    Search room e reservation er ekta button thakbe(front end)/-----
+    Search room e reservation er ekta button thakbe(front end)/-----hoy nai
     Room can be add only admin(front end)
     Not selecting today at calendar
 
