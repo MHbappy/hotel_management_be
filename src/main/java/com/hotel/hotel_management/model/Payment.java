@@ -30,20 +30,14 @@ public class Payment implements Serializable {
     private LocalDateTime paymentDateTime;
 
     @ManyToOne
-//    @JsonIgnoreProperties(value = { "roles", "reservations", "payments", "creditCards" }, allowSetters = true)
     private Users users;
 
     @ManyToOne
-//    @JsonIgnoreProperties(value = { "room", "users", "checkInOuts", "payments" }, allowSetters = true)
     private Reservation reservation;
 
     @ManyToOne
-//    @JsonIgnoreProperties(value = { "payments" }, allowSetters = true)
     private PaymentStatus paymentStatus;
 
     @ManyToOne
-//    @JsonIgnoreProperties(value = { "users", "payments" }, allowSetters = true)
     private CreditCard creditCard;
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here
 }

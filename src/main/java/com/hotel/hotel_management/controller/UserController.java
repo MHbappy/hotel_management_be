@@ -100,14 +100,12 @@ public class UserController {
   }
 
   @GetMapping(value = "/{username}")
-//  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public UserResponseDTO search(@PathVariable String username) {
     return modelMapper.map(userService.search(username), UserResponseDTO.class);
   }
 
 
   @GetMapping(value = "/by-id/{id}")
-//  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public UserResponseDTO search(@PathVariable Integer id) {
     return modelMapper.map(userService.searchById(id), UserResponseDTO.class);
   }

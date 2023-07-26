@@ -1,6 +1,5 @@
 package com.hotel.hotel_management.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hotel.hotel_management.enumuration.ReservationStatus;
 import lombok.Data;
 

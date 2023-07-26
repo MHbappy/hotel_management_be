@@ -1,5 +1,6 @@
 package com.hotel.hotel_management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import javax.persistence.*;
@@ -44,7 +45,7 @@ public class Room implements Serializable {
     private String description;
 
     @Column(name = "image")
-//    @Lob
+    @JsonIgnore
     private byte[] image;
 
     @ManyToOne
@@ -52,9 +53,6 @@ public class Room implements Serializable {
 
     @ManyToOne
     private RoomStatus roomStatus;
-
-//    @ManyToOne
-//    private RoomAvailabilityStatus roomAvailabilityStatus;
 
     private Boolean isActive;
 }

@@ -2,6 +2,7 @@ package com.hotel.hotel_management.service;
 
 import com.hotel.hotel_management.model.Room;
 import com.hotel.hotel_management.repository.RoomRepository;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,12 +18,10 @@ import java.util.Optional;
  */
 @Service
 @Transactional
+@AllArgsConstructor
 public class RoomService {
     private final Logger log = LoggerFactory.getLogger(RoomService.class);
     private final RoomRepository roomRepository;
-    public RoomService(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
-    }
 
     public Room save(Room room) {
         log.debug("Request to save Room : {}", room);
@@ -57,7 +56,6 @@ public class RoomService {
         return roomRepository.findById(id);
     }
 
-    
     public void delete(Long id) {
         log.debug("Request to delete Room : {}", id);
         Room room = roomRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room not found"));

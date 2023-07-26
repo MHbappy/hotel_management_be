@@ -2,6 +2,7 @@ package com.hotel.hotel_management.service;
 
 import com.hotel.hotel_management.model.SpecialOffer;
 import com.hotel.hotel_management.repository.SpecialOfferRepository;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.Query;
@@ -17,14 +18,11 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class SpecialOfferService {
 
     private final Logger log = LoggerFactory.getLogger(SpecialOfferService.class);
     private final SpecialOfferRepository specialOfferRepository;
-
-    public SpecialOfferService(SpecialOfferRepository specialOfferRepository) {
-        this.specialOfferRepository = specialOfferRepository;
-    }
 
     public SpecialOffer save(SpecialOffer specialOffer) {
         log.debug("Request to save SpecialOffer : {}", specialOffer);

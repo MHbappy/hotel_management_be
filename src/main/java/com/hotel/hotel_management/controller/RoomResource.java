@@ -3,6 +3,7 @@ package com.hotel.hotel_management.controller;
 import com.hotel.hotel_management.model.Room;
 import com.hotel.hotel_management.repository.RoomRepository;
 import com.hotel.hotel_management.service.RoomService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -23,16 +24,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class RoomResource {
 
     private final Logger log = LoggerFactory.getLogger(RoomResource.class);
     private final RoomService roomService;
     private final RoomRepository roomRepository;
-
-    public RoomResource(RoomService roomService, RoomRepository roomRepository) {
-        this.roomService = roomService;
-        this.roomRepository = roomRepository;
-    }
 
     @PostMapping("/rooms")
     public ResponseEntity<Room> createRoom(@RequestBody @Valid Room room) throws URISyntaxException {

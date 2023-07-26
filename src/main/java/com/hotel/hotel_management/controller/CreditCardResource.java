@@ -3,6 +3,7 @@ package com.hotel.hotel_management.controller;
 import com.hotel.hotel_management.model.CreditCard;
 import com.hotel.hotel_management.repository.CreditCardRepository;
 import com.hotel.hotel_management.service.CreditCardService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,16 +18,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class CreditCardResource {
 
     private final Logger log = LoggerFactory.getLogger(CreditCardResource.class);
     private final CreditCardService creditCardService;
     private final CreditCardRepository creditCardRepository;
-
-    public CreditCardResource(CreditCardService creditCardService, CreditCardRepository creditCardRepository) {
-        this.creditCardService = creditCardService;
-        this.creditCardRepository = creditCardRepository;
-    }
 
     @PostMapping("/credit-cards")
     public ResponseEntity<CreditCard> createCreditCard(@RequestBody CreditCard creditCard) throws URISyntaxException {

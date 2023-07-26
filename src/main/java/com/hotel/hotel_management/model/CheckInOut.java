@@ -1,12 +1,10 @@
 package com.hotel.hotel_management.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hotel.hotel_management.enumuration.CheckInStatus;
 import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 /**
  * A CheckInOut.

@@ -49,7 +49,7 @@ public class SpecialOfferResource {
     public ResponseEntity<SpecialOffer> updateSpecialOffer(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody SpecialOffer specialOffer
-    ) throws URISyntaxException {
+    ) {
         log.debug("REST request to update SpecialOffer : {}, {}", id, specialOffer);
         if (specialOffer.getId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id");
@@ -86,11 +86,6 @@ public class SpecialOfferResource {
         return specialOfferService.findAllByRoomTypeAndDateBetween(code, date, roomTypeId);
     }
 
-    /**
-     * {@code DELETE  /special-offers/:id} : delete the "id" specialOffer.
-     * @param id the id of the specialOffer to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
     @DeleteMapping("/special-offers/{id}")
     public ResponseEntity<Void> deleteSpecialOffer(@PathVariable Long id) {
         log.debug("REST request to delete SpecialOffer : {}", id);

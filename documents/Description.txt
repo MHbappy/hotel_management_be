@@ -105,5 +105,10 @@ Guest - Can not create Room, Offer, canc not create user.
 
 
 
+PaymentResource e search er ektu kaj ase
+
+
+
+
 
 

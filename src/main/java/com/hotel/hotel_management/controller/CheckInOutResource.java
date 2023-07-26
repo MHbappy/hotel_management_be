@@ -27,11 +27,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class CheckInOutResource {
-
-    private final CheckInOutService checkInOutService;
     private final CheckInOutRepository checkInOutRepository;
-    private final RoomAvailabilityStatusRepository roomAvailabilityStatusRepository;
-    private final RoomRepository roomRepository;
 
     @PostMapping("/checkin/{checkInOutId}")
     public ResponseEntity<CheckInOut> createCheckIn(@PathVariable Long checkInOutId) {
@@ -47,10 +43,6 @@ public class CheckInOutResource {
         CheckInOut checkInOutcheckInOut = checkInOutRepository.findById(checkInOutId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkinout not found!"));
         checkInOutcheckInOut.setCheckInStatus(CheckInStatus.CHECK_OUT);
         checkInOutcheckInOut.setEndDateTime(LocalDateTime.now());
-//        RoomAvailabilityStatus roomAvailabilityStatus = roomAvailabilityStatusRepository.findByName(Constrains.roomAvailabilityStatusOpen);
-//        checkInOutcheckInOut.getReservation().getRoom().setRoomAvailabilityStatus(roomAvailabilityStatus);
-        //change room status
-//        roomRepository.save(checkInOutcheckInOut.getReservation().getRoom());
         CheckInOut checkInOut = checkInOutRepository.save(checkInOutcheckInOut);
         return ResponseEntity.ok(checkInOut);
     }
