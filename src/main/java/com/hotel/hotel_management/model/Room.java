@@ -21,11 +21,11 @@ public class Room implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Size(min = 3, message = "Minimum name length: 3 characters")
+    @Size(min = 1, message = "Minimum name length: 3 characters")
     @Column(name = "title")
     private String title;
 
-    @Size(min = 3, message = "Minimum name length: 3 characters")
+    @Size(min = 1, message = "Minimum name length: 3 characters")
     @Column(name = "room_number")
     private String roomNumber;
 
