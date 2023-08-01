@@ -45,7 +45,7 @@ public class Room implements Serializable {
     private String description;
 
     @Column(name = "image")
-    @JsonIgnore
+//    @JsonIgnore
     private byte[] image;
 
     @ManyToOne
